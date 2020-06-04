@@ -1,16 +1,24 @@
 import React, {Component} from 'react';
+import Contacts from './components/contacts';
 
 class App extends Component {
-  render () {
+  state = {
+    contacts: []
+  }
+
+  componentDidMount() {
+    fetch('http://jsonplaceholder.typicode.com/users')
+    .then(userList => userList.json())
+    .then((data) => {
+      this.setState({ contacts: data })
+    })
+    .catch(console.log)
+  }
+
+  render() {
     return (
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Josh Campbell</h5>
-          <h6 class="card-subtitle mb-2 text-muted">josh@p4a.net</h6>
-          <p class="card-text">420 blaze up</p>
-        </div>
-      </div>
-    );
+      <Contacts contacts={this.state.contacts} />
+    )
   }
 }
 
